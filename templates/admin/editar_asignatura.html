@@ -1,0 +1,51 @@
+
+<body>
+{% extends "admin/navbar_admin.html" %}
+{% block body %}
+    <div
+      class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Editar asignatura
+      </h1>
+      <form action="{{ url_for('editarAsignatura', id=data['idAsignatura']) }}" method="post" style="width: 70%">
+        {% if data %}
+        <label
+          class="form-label"
+          for="key"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Clave de la asignatura</label
+        ><input
+          class="form-control"
+          type="text"
+          name="clavAsignatura"
+          maxlength="10"
+          required=""
+          style="font-family: 'Red Hat Text', sans-serif"
+          value="{{ data['clavAsignatura'] }}"
+        /><label
+          class="form-label"
+          for="name"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Nombre de la asignatura</label
+        ><input
+          class="form-control"
+          type="text"
+          name="nomAsignatura"
+          required=""
+          maxlength="45"
+          style="font-family: 'Red Hat Text', sans-serif"
+          value="{{ data['nomAsignatura'] }}"
+        /><button
+          class="btn btn-primary"
+          type="submit"
+          style="background: #3f7d20; border-color: #3f7d20; margin-top: 2%"
+        >
+          Enviar</button
+        ><input class="form-control" type="hidden" value="{{ data['idAsignatura'] }}" />
+        {% endif %}
+      </form>
+    </div>
+{% endblock %}
+</body>

@@ -1,0 +1,51 @@
+
+<body>
+{% extends "admin/navbar_admin.html" %}
+{% block body %}
+    <div
+      class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Nuevo miembro
+      </h1>
+      <div class="table-responsive" style="width: 99%">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Sexo</th>
+              <th>Matrícula</th>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td>Nombre</td>
+              <td>Sexo</td>
+              <td>Matrícula</td>
+              <td>Usuario</td>
+              <td>Rol</td>
+              <td>
+                <form action="crearMiembro">
+                  <input
+                    class="form-control"
+                    type="hidden"
+                    name="idUsuario"
+                    value="id"
+                  /><button class="btn btn-success" type="submit">
+                    Añadir
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}
+</body>

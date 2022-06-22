@@ -1,0 +1,81 @@
+
+<body>
+{% extends "admin/navbar_admin.html" %}
+{% block body %}
+    <div
+      class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Editar horario
+      </h1>
+      <form action="editarHorario" method="post" style="width: 70%">
+        <label
+          class="form-label"
+          for="day"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Día del horario</label
+        ><select
+          class="form-select"
+          name="day"
+          style="font-family: 'Red Hat Text', sans-serif"
+        >
+          <optgroup label="Seleccione un día">
+            <option value="Lunes" selected="">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miércoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sábado">Sábado</option>
+            <option value="Domigo">Domingo</option>
+          </optgroup></select
+        ><label
+          class="form-label"
+          for="hour1"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Hora de inicio</label
+        ><input
+          class="form-control"
+          type="time"
+          name="hour1"
+          style="font-family: 'Red Hat Text', sans-serif"
+        /><label
+          class="form-label"
+          for="hour2"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Hora de fin</label
+        ><input
+          class="form-control"
+          type="time"
+          name="hour2"
+          style="font-family: 'Red Hat Text', sans-serif"
+        /><button
+          class="btn btn-primary"
+          type="submit"
+          style="background: #3f7d20; border-color: #3f7d20; margin-top: 2%"
+        >
+          Enviar</button
+        ><input class="form-control" type="hidden" />
+      </form>
+    </div>
+    <div
+      class="alert alert-danger alert-dismissible"
+      role="alert"
+      style="margin-top: 16px"
+    >
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+      <h4 class="alert-heading">Error:</h4>
+      <span
+        ><strong
+          >Los valores ingresados entran en conflicto con una entidad ya
+          existente. (409)</strong
+        ></span
+      >
+    </div>
+{% endblock %}
+</body>

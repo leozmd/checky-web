@@ -1,0 +1,144 @@
+
+<body>
+{% extends "admin/navbar_admin.html" %}
+{% block body %}
+    <div
+      class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Crear usuario
+      </h1>
+      <form action="crearUsuario" method="post" style="width: 70%">
+        <label
+          class="form-label"
+          for="nombre"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Nombre completo</label
+        >
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            name="nombre"
+            required=""
+            maxlength="45"
+          /><input
+            class="form-control"
+            type="text"
+            name="appat"
+            required=""
+            maxlength="45"
+          /><input
+            class="form-control"
+            type="text"
+            name="appmat"
+            required=""
+            maxlength="45"
+          />
+        </div>
+        <label
+          class="form-label"
+          for="sexo"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Sexo</label
+        ><select
+          class="form-select"
+          name="sexo"
+          style="font-family: 'Red Hat Text', sans-serif"
+          required=""
+        >
+          <optgroup label="Seleccione un sexo">
+            <option value="Masculino" selected="">Masculino</option>
+            <option value="Femenino">Femenino</option>
+          </optgroup></select
+        ><label
+          class="form-label"
+          for="matricula"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Matrícula</label
+        ><input
+          class="form-control"
+          type="text"
+          required=""
+          maxlength="45"
+          name="matricula"
+        /><label
+          class="form-label"
+          for="usuario"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Nombre de usuario</label
+        ><input
+          class="form-control"
+          type="text"
+          required=""
+          maxlength="45"
+          name="usuario"
+        /><label
+          class="form-label"
+          for="pass"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Contraseña</label
+        ><input
+          class="form-control"
+          type="password"
+          required=""
+          name="pass"
+        /><label
+          class="form-label"
+          for="rol"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Rol</label
+        ><select
+          class="form-select"
+          name="rol"
+          style="font-family: 'Red Hat Text', sans-serif"
+          required=""
+        >
+          <optgroup label="Seleccione un rol">
+            <option value="" selected="">Rol</option>
+          </optgroup></select
+        ><label
+          class="form-label"
+          for="estado"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Estado</label
+        ><select
+          class="form-select"
+          name="estado"
+          style="font-family: 'Red Hat Text', sans-serif"
+          required=""
+        >
+          <optgroup label="Seleccione un estado">
+            <option value="" selected="">Estado</option>
+          </optgroup></select
+        ><button
+          class="btn btn-primary"
+          type="submit"
+          style="background: #3f7d20; border-color: #3f7d20; margin-top: 2%"
+        >
+          Enviar
+        </button>
+        <div
+          class="alert alert-danger alert-dismissible"
+          role="alert"
+          style="margin-top: 16px"
+        >
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+          <h4 class="alert-heading">Error:</h4>
+          <span
+            ><strong
+              >Los valores ingresados entran en conflicto con una entidad ya
+              existente. (409)</strong
+            ></span
+          >
+        </div>
+      </form>
+    </div>
+{% endblock %}
+</body>

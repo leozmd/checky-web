@@ -1,0 +1,96 @@
+
+<body>
+{% extends "admin/navbar_admin.html" %}
+{% block body %}
+
+    <div
+      class="text-center d-lg-flex flex-column align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Clase
+      </h1>
+      <div
+        class="d-lg-flex align-items-lg-center"
+        style="width: 100%; padding: 2%"
+      >
+        <div style="width: 50%">
+          <ul style="margin-bottom: 0px">
+            <li>Asignatura: Asignatura</li>
+            <li>Carrera: Carrera</li>
+            <li>Grado: Grado</li>
+            <li>Grupo: Grupo</li>
+            <li>Turno: Turno</li>
+          </ul>
+        </div>
+        <div style="width: 50%">
+          <h4>Horarios:</h4>
+          <ul>
+            <li>Día: Hora-Hora</li>
+          </ul>
+          <form
+            class="d-lg-flex align-items-lg-start"
+            action="crearHorarioClase"
+            method="post"
+          >
+            <select class="form-select">
+              <optgroup label="Selecciona un horario">
+                <option value="id">Dia: Hora-Hora</option>
+              </optgroup></select
+            ><button class="btn btn-success" type="button">Añadir</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div
+      class="text-center d-lg-flex flex-column align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Miembros
+      </h1>
+      <a
+        class="btn btn-primary"
+        role="button"
+        style="background: #3f7d20; border-color: #3f7d20"
+        href="{{ url_for('crearMiembro') }}"
+        >Nuevo</a
+      >
+      <div class="table-responsive" style="width: 99%">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Sexo</th>
+              <th>Matrícula</th>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td>Nombre</td>
+              <td>Sexo</td>
+              <td>Matrícula</td>
+              <td>Usuario</td>
+              <td>Rol</td>
+              <td>
+                <form>
+                  <input class="form-control" type="hidden" /><button
+                    class="btn btn-danger"
+                    type="submit"
+                  >
+                    Eliminar
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}
+</body>

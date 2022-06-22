@@ -1,0 +1,55 @@
+
+<body>
+{% extends "admin/navbar_admin.html" %}
+{% block body %}
+
+    <div
+      class="text-center d-lg-flex flex-column align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Carreras
+      </h1>
+      <a
+        class="btn btn-primary"
+        role="button"
+        style="background: #3f7d20; border-color: #3f7d20"
+        href="{{ url_for('crearCarrera') }}"
+        >Nueva</a
+      >
+      <div class="table-responsive" style="width: 90%">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td>Nombre</td>
+              <td>
+                <form>
+                  <input class="form-control" type="hidden" /><a
+                    class="btn btn-primary"
+                    role="button"
+                    style="
+                      background: #3f7d20;
+                      border-color: #3f7d20;
+                      margin-right: 2%;
+                    "
+                    >Editar</a
+                  ><button class="btn btn-danger" type="submit">
+                    Eliminar
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}
+</body>

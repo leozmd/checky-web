@@ -1,0 +1,132 @@
+
+<body>
+{% extends "admin/navbar_admin.html" %}
+{% block body %}
+
+    <div
+      class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Crear clase
+      </h1>
+      <form action="crearClase" method="post" style="width: 70%">
+        <label
+          class="form-label"
+          for="carrera"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Carrera</label
+        ><select
+          class="form-select"
+          name="carrera"
+          style="font-family: 'Red Hat Text', sans-serif"
+          required=""
+        >
+          <optgroup label="Seleccione una carrera">
+            <option value="" selected="">Carrera</option>
+          </optgroup></select
+        ><label
+          class="form-label"
+          for="grado"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Grado</label
+        ><select
+          class="form-select"
+          name="grado"
+          style="font-family: 'Red Hat Text', sans-serif"
+          required=""
+        >
+          <optgroup label="Seleccione un grado">
+            <option value="" selected="">Grado</option>
+          </optgroup></select
+        ><label
+          class="form-label"
+          for="turno"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Turno</label
+        ><select
+          class="form-select"
+          name="turno"
+          style="font-family: 'Red Hat Text', sans-serif"
+          required=""
+        >
+          <optgroup label="Seleccione un turno">
+            <option value="" selected="">Turno</option>
+          </optgroup></select
+        ><label
+          class="form-label"
+          for="grupo"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Grupo</label
+        ><select
+          class="form-select"
+          name="grupo"
+          style="font-family: 'Red Hat Text', sans-serif"
+          required=""
+        >
+          <optgroup label="Seleccione un grupo">
+            <option value="" selected="">Grupo</option>
+          </optgroup></select
+        ><label
+          class="form-label"
+          for="asignatura"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Asignatura</label
+        ><select
+          class="form-select"
+          name="asignatura"
+          style="font-family: 'Red Hat Text', sans-serif"
+          required=""
+        >
+          <optgroup label="Seleccione una asignatura">
+            <option value="" selected="">Asignatura</option>
+          </optgroup></select
+        ><button
+          class="btn btn-primary"
+          type="submit"
+          style="background: #3f7d20; border-color: #3f7d20; margin-top: 2%"
+        >
+          Enviar
+        </button>
+        <div
+          class="alert alert-danger alert-dismissible"
+          role="alert"
+          style="margin-top: 16px"
+        >
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+          <h4 class="alert-heading">Error:</h4>
+          <span
+            ><strong
+              >Los valores ingresados entran en conflicto con una entidad ya
+              existente. (409)</strong
+            ></span
+          >
+        </div>
+        <div
+          class="alert alert-danger alert-dismissible"
+          role="alert"
+          style="margin-top: 16px"
+        >
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+          <h4 class="alert-heading">Error:</h4>
+          <span
+            ><strong
+              >No existen entidades necesarias para la creación de clases.
+              (404)</strong
+            ></span
+          >
+        </div>
+      </form>
+    </div>
+{% endblock %}
+</body>

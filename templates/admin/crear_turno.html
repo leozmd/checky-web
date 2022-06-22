@@ -1,0 +1,54 @@
+
+<body>
+{% extends "admin/navbar_admin.html" %}
+{% block body %}
+    <div
+      class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"
+      style="padding: 2%"
+    >
+      <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
+        Crear turno
+      </h1>
+      <form action="crearTurno" method="post" style="width: 70%">
+        <label
+          class="form-label"
+          for="name"
+          style="font-family: 'Red Hat Text', sans-serif"
+          >Nombre del turno</label
+        ><input
+          class="form-control"
+          type="text"
+          name="name"
+          required=""
+          maxlength="45"
+          style="font-family: 'Red Hat Text', sans-serif"
+        /><button
+          class="btn btn-primary"
+          type="submit"
+          style="background: #3f7d20; border-color: #3f7d20; margin-top: 2%"
+        >
+          Enviar
+        </button>
+        <div
+          class="alert alert-danger alert-dismissible"
+          role="alert"
+          style="margin-top: 16px"
+        >
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+          <h4 class="alert-heading">Error:</h4>
+          <span
+            ><strong
+              >Los valores ingresados entran en conflicto con una entidad ya
+              existente. (409)</strong
+            ></span
+          >
+        </div>
+      </form>
+    </div>
+{% endblock %}
+</body>
