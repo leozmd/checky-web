@@ -13,36 +13,34 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Nombre</th>
               <th>Sexo</th>
               <th>Matrícula</th>
               <th>Usuario</th>
-              <th>Rol</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
+            {% for user in users %}
             <tr>
-              <td>ID</td>
-              <td>Nombre</td>
-              <td>Sexo</td>
-              <td>Matrícula</td>
-              <td>Usuario</td>
-              <td>Rol</td>
+              <td>{{ user['nomUsuario'] }} {{ user['appatUsuario'] }} {{ user['apmatUsuario'] }}</td>
+              <td>{{ user['sexoUsuario'] }}</td>
+              <td>{{ user['matUsuario'] }}</td>
+              <td>{{ user['usuUsuario'] }}</td>
               <td>
-                <form action="crearMiembro">
+                <form action="{{ url_for('crearMiembro') }}" method="post">
                   <input
                     class="form-control"
                     type="hidden"
                     name="idUsuario"
-                    value="id"
+                    value="{{ user['idUsuario'] }}"
                   /><button class="btn btn-success" type="submit">
                     Añadir
                   </button>
                 </form>
               </td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

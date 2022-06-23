@@ -9,7 +9,7 @@
       <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
         Editar clase
       </h1>
-      <form action="editarClase" method="post" style="width: 70%">
+      <form action="{{ url_for('editarClase', id=data['idClase']) }}" method="post" style="width: 70%">
         <label
           class="form-label"
           for="carrera"
@@ -17,12 +17,14 @@
           >Carrera</label
         ><select
           class="form-select"
-          name="carrera"
+          name="idCarrera"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione una carrera">
-            <option value="" selected="">Carrera</option>
+            {% for career in careers %}
+            <option value="{{ career['idCarrera'] }}" selected="">{{ career['nomCarrera'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -31,12 +33,14 @@
           >Grado</label
         ><select
           class="form-select"
-          name="grado"
+          name="idGrado"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione un grado">
-            <option value="" selected="">Grado</option>
+            {% for grade in grades %}
+            <option value="{{ grade['idGrado'] }}" selected="">{{ grade['tipoGrado'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -45,12 +49,14 @@
           >Turno</label
         ><select
           class="form-select"
-          name="turno"
+          name="idTurno"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione un turno">
-            <option value="" selected="">Turno</option>
+            {% for shift in shifts %}
+            <option value="{{ shift['idTurno'] }}" selected="">{{ shift['nomTurno'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -59,12 +65,14 @@
           >Grupo</label
         ><select
           class="form-select"
-          name="grupo"
+          name="idGrupo"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione un grupo">
-            <option value="" selected="">Grupo</option>
+            {% for group in groups %}
+            <option value="{{ group['idGrupo'] }}" selected="">{{ group['tipoGrupo'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -73,20 +81,22 @@
           >Asignatura</label
         ><select
           class="form-select"
-          name="asignatura"
+          name="idAsignatura"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione una asignatura">
-            <option value="" selected="">Asignatura</option>
+            {% for course in courses %}
+            <option value="{{ course['idAsignatura'] }}" selected="">{{ course['nomAsignatura'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><button
           class="btn btn-primary"
           type="submit"
           style="background: #3f7d20; border-color: #3f7d20; margin-top: 2%"
         >
-          Enviar</button
-        ><input class="form-control" type="hidden" />
+          Enviar
+        </button>
       </form>
     </div>
     <div

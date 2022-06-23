@@ -64,8 +64,8 @@ def adminInicio():
     return res
 
 
-@app.route('/admin/Estados', methods = ['GET', 'POST'])
-def adminEstados():
+@app.route('/admin/asignaturas', methods = ['GET', 'POST'])
+def adminAsignaturas():
     if 'token' in session:
         token = session['token']
         response = requests.post(api_url + f"/logintoken?token={token}")
@@ -80,7 +80,7 @@ def adminEstados():
                 content = response.content
                 data = json.loads(content)
                 print(data)
-                res = render_template('admin/admin_ver_Estados.html', data=data)
+                res = render_template('admin/admin_ver_asignaturas.html', data=data)
             else:
                 res = redirect(url_for('index'))
         elif response.status_code == 401:
@@ -108,7 +108,7 @@ def crearAsignatura():
                     }
                     response = requests.post(api_url + "/courses?token="+token, json=payload)
                     if response.status_code == 201:
-                        res = redirect(url_for('adminEstados'))
+                        res = redirect(url_for('admiAsignaturas'))
                     elif response.status_code == 409:
                         res = render_template('admin/crear_asignatura.html', msg = response.status_code)
                 else:
@@ -252,8 +252,8 @@ def crearCarrera():
                     payload = {
                         "nomCarrera": name
                     }
-                    response = requests.post(api_url + "/courses?token="+token, json=payload)
-                    if response.status_code == 201:
+                    response = requests.post(api_url + "/careers?token="+token, json=payload)
+                    if response.status_code == 200:
                         res = redirect(url_for('adminCarreras'))
                     elif response.status_code == 409:
                         res = render_template('admin/crear_carrera.html', msg = response.status_code)
@@ -294,9 +294,9 @@ def editarCarrera(id):
                 if response_data['tipoRol'] == 'Administrador':
                     name = request.form['nomCarrera']
                     payload = {
-                        "nomAsignatura": name
+                        "nomCarrera": name
                     }
-                    response = requests.put(api_url + f"/courses/{id}?token={token}", json=payload)
+                    response = requests.put(api_url + f"/careers/{id}?token={token}", json=payload)
                     if response.status_code == 200:
                         res = redirect(url_for('adminCarreras'))
                     elif response.status_code == 409:
@@ -332,7 +332,7 @@ def editarCarrera(id):
 
 
 @app.route('/eliminar/carrera/', methods=['GET', 'POST'])
-def eliminarAsignatura():
+def eliminarCarrera():
     if request.method == 'POST':
         if 'token' in session:
             token = session['token']
@@ -342,7 +342,7 @@ def eliminarAsignatura():
                 response_data = response.json()
                 if response_data['tipoRol'] == 'Administrador':
                     id = request.form["idCarrera"]
-                    response = requests.delete(api_url + f"/courses/{id}?token={token}")
+                    response = requests.delete(api_url + f"/careers/{id}?token={token}")
                     if response.status_code == 200:
                         res = redirect(url_for('adminCarreras'))
                 else:
@@ -382,6 +382,89 @@ def adminClases():
     return res
 
 
+@app.route('/admin/clases/<int:id>', methods = ['GET', 'POST'])
+def adminVerClase(id):
+    if 'token' in session:
+        token = session['token']
+        response = requests.post(api_url + f"/logintoken?token={token}")
+        if response.status_code == 200:
+            response = requests.post(api_url+"/roles?token="+token)
+            response_data = response.json()
+            if response_data['tipoRol'] == 'Administrador':
+                print(token)
+                response = requests.get(api_url+ f"/classrooms/{id}?token={token}")
+                print(response.status_code)
+                print(response)
+                content = response.content
+                data = json.loads(content)
+                print(data)
+                classroom_schedules = requests.get(api_url+ f"/schedules/classroom/{id}?token={token}")
+                classroom_schedules = classroom_schedules.content
+                classroom_schedules = json.loads(classroom_schedules)
+                schedules = requests.get(api_url+ f"/schedules?token={token}")
+                schedules = schedules.content
+                schedules = json.loads(schedules)
+                members = requests.get(api_url+ f"/classrooms/{id}/members?token={token}")
+                members = members.content
+                members = json.loads(members)
+                res = render_template('admin/admin_ver_clase.html', idClase = id, data=data, classroom_schedules = classroom_schedules, schedules = schedules, members = members)
+            else:
+                res = redirect(url_for('index'))
+        elif response.status_code == 401:
+            res = render_template('index')
+    else:
+        res = redirect(url_for('index'))
+    return res
+
+
+@app.route('/clase/<int:id>/crear/miembro', methods = ['GET', 'POST'])
+def crearMiembro(id):
+    if request.method == 'POST':
+        if 'token' in session:
+            token = session['token']
+            response = requests.post(api_url + f"/logintoken?token={token}")
+            if response.status_code == 200:
+                response = requests.post(api_url + "/roles?token="+token)
+                response_data = response.json()
+                if response_data['tipoRol'] == 'Administrador':
+                    idUsuario = request.form['idUsuario']
+                    idClase = id
+                    payload = {
+                        "idUsuario": idUsuario,
+                        "idClase": idClase
+                    }
+                    response = requests.post(api_url + "/members?token="+token, json=payload)
+                    if response.status_code == 201:
+                        res = redirect(url_for('adminVerClase', id=id))
+                    elif response.status_code == 409:
+                        res = redirect(url_for('adminVerClase', id=id))
+                else:
+                    res = redirect(url_for('index'))
+            elif response.status_code == 401:
+                res = render_template('index')
+        else:
+            res = redirect(url_for('index'))
+    elif request.method == 'GET':
+        if 'token' in session:
+            token = session['token']
+            response = requests.post(api_url + f"/logintoken?token={token}")
+            if response.status_code == 200:
+                response = requests.post(api_url + "/roles?token="+token)
+                response_data = response.json()
+                if response_data['tipoRol'] == 'Administrador':
+                    users = requests.get(api_url + f"/users?token={token}")
+                    users = users.content
+                    users = json.loads(users)
+                    res = render_template('admin/crear_miembro.html', users=users)
+                else:
+                    res = redirect(url_for('index'))
+            elif response.status_code == 401:
+                res = render_template('index')
+        else:
+            res = redirect(url_for('index'))
+    return res
+
+
 @app.route('/crear/clase', methods = ['GET', 'POST'])
 def crearClase():
     if request.method == 'POST':
@@ -405,7 +488,7 @@ def crearClase():
                         "idAsignatura": idAsignatura
                     }
                     response = requests.post(api_url + "/classrooms?token="+token, json=payload)
-                    if response.status_code == 201:
+                    if response.status_code == 200:
                         res = redirect(url_for('adminClases'))
                     elif response.status_code == 409:
                         res = render_template('admin/crear_clase.html', msg = response.status_code)
@@ -423,8 +506,22 @@ def crearClase():
                 response = requests.post(api_url + "/roles?token="+token)
                 response_data = response.json()
                 if response_data['tipoRol'] == 'Administrador':
-                    
-                    res = render_template('admin/crear_clase.html')
+                    careers = requests.get(api_url + f"/careers?token={token}")
+                    careers = careers.content
+                    careers = json.loads(careers)
+                    grades = requests.get(api_url + f"/grades?token={token}")
+                    grades = grades.content
+                    grades = json.loads(grades)
+                    shifts = requests.get(api_url + f"/shifts?token={token}")
+                    shifts = shifts.content
+                    shifts = json.loads(shifts)
+                    groups = requests.get(api_url + f"/groups?token={token}")
+                    groups = groups.content
+                    groups = json.loads(groups)
+                    courses = requests.get(api_url + f"/courses?token={token}")
+                    courses = courses.content
+                    courses = json.loads(courses)
+                    res = render_template('admin/crear_clase.html', careers=careers, grades=grades, shifts=shifts, groups=groups, courses=courses)
                 else:
                     res = redirect(url_for('index'))
             elif response.status_code == 401:
@@ -481,7 +578,22 @@ def editarClase(id):
                     content = response.content
                     data = json.loads(content)
                     print(data)
-                    res = render_template('admin/editar_clase.html', data = data)
+                    careers = requests.get(api_url + f"/careers?token={token}")
+                    careers = careers.content
+                    careers = json.loads(careers)
+                    grades = requests.get(api_url + f"/grades?token={token}")
+                    grades = grades.content
+                    grades = json.loads(grades)
+                    shifts = requests.get(api_url + f"/shifts?token={token}")
+                    shifts = shifts.content
+                    shifts = json.loads(shifts)
+                    groups = requests.get(api_url + f"/groups?token={token}")
+                    groups = groups.content
+                    groups = json.loads(groups)
+                    courses = requests.get(api_url + f"/courses?token={token}")
+                    courses = courses.content
+                    courses = json.loads(courses)
+                    res = render_template('admin/editar_clase.html', data = data, careers=careers, grades=grades, shifts=shifts, groups=groups, courses=courses)
                 else:
                     res = redirect(url_for('index'))
             elif response.status_code == 401:
@@ -700,7 +812,7 @@ def crearGrado():
                 response = requests.post(api_url + "/roles?token="+token)
                 response_data = response.json()
                 if response_data['tipoRol'] == 'Administrador':
-                    tipoGrado = request.form['tipoGrado']
+                    tipoGrado = request.form['name']
                     payload = {
                         "tipoGrado": tipoGrado
                     }
@@ -1026,6 +1138,52 @@ def crearHorario():
     return res
 
 
+@app.route('/clase/crear/horario', methods = ['GET', 'POST'])
+def crearHorarioClase():
+    if request.method == 'POST':
+        if 'token' in session:
+            token = session['token']
+            response = requests.post(api_url + f"/logintoken?token={token}")
+            if response.status_code == 200:
+                response = requests.post(api_url + "/roles?token="+token)
+                response_data = response.json()
+                if response_data['tipoRol'] == 'Administrador':
+                    idHorario = request.form["idHorario"]
+                    idClase = request.form["idClase"]
+                    payload = {
+                        "idHorario": idHorario,
+                        "idClase": idClase
+                    }
+                    response = requests.post(api_url + "/schedules?token="+token, json=payload)
+                    if response.status_code == 201:
+                        res = redirect(url_for('adminVerClase', id=idClase))
+                    elif response.status_code == 409:
+                        res = render_template('adminVerClase', id=idClase)
+                else:
+                    res = redirect(url_for('index'))
+            elif response.status_code == 401:
+                res = render_template('index')
+        else:
+            res = redirect(url_for('index'))
+    elif request.method == 'GET':
+        if 'token' in session:
+            token = session['token']
+            response = requests.post(api_url + f"/logintoken?token={token}")
+            if response.status_code == 200:
+                response = requests.post(api_url + "/roles?token="+token)
+                response_data = response.json()
+                if response_data['tipoRol'] == 'Administrador':
+                    
+                    res = render_template('admin/crear_horario.html')
+                else:
+                    res = redirect(url_for('index'))
+            elif response.status_code == 401:
+                res = render_template('index')
+        else:
+            res = redirect(url_for('index'))
+    return res
+
+
 @app.route('/editar/horario/<int:id>', methods = ['GET', 'POST'])
 def editarHorario(id):
     if request.method == 'POST':
@@ -1323,8 +1481,13 @@ def crearUsuario():
                 response = requests.post(api_url + "/roles?token="+token)
                 response_data = response.json()
                 if response_data['tipoRol'] == 'Administrador':
-                    
-                    res = render_template('admin/crear_usuario.html')
+                    roles = requests.get(api_url + f"/roles?token={token}")
+                    roles = roles.content
+                    roles = json.loads(roles)
+                    statuses = requests.get(api_url + f"/statuses?token={token}")
+                    statuses = statuses.content
+                    statuses = json.loads(statuses)
+                    res = render_template('admin/crear_usuario.html', roles=roles, statuses=statuses)
                 else:
                     res = redirect(url_for('index'))
             elif response.status_code == 401:
@@ -1389,7 +1552,13 @@ def editarUsuario(id):
                     content = response.content
                     data = json.loads(content)
                     print(data)
-                    res = render_template('admin/editar_usuario.html', data = data)
+                    roles = requests.get(api_url + f"/roles?token={token}")
+                    roles = roles.content
+                    roles = json.loads(roles)
+                    statuses = requests.get(api_url + f"/statuses?token={token}")
+                    statuses = statuses.content
+                    statuses = json.loads(statuses)
+                    res = render_template('admin/editar_usuario.html', data = data, roles=roles, statuses=statuses)
                 else:
                     res = redirect(url_for('index'))
             elif response.status_code == 401:
@@ -1421,6 +1590,32 @@ def eliminarUsuario():
             res = redirect(url_for('index'))
     else:
         res = redirect(url_for('adminUsuarios'))
+    return res
+
+
+@app.route('/clases')
+def clases():
+    if 'token' in session:
+        token = session['token']
+        response = requests.post(api_url + f"/logintoken?token={token}")
+        if response.status_code == 200:
+            response = requests.post(api_url+"/roles?token="+token)
+            response_data = response.json()
+            if response_data['tipoRol'] != 'Administrador':
+                print(token)
+                response = requests.get(api_url+ "/grades?token="+token)
+                print(response.status_code)
+                print(response)
+                content = response.content
+                data = json.loads(content)
+                print(data)
+                res = render_template('admin/admin_ver_grados.html', data=data)
+            else:
+                res = redirect(url_for('index'))
+        elif response.status_code == 401:
+            res = render_template('index')
+    else:
+        res = redirect(url_for('index'))
     return res
 
 

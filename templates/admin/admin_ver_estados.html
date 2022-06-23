@@ -20,21 +20,20 @@
       <div class="table-responsive" style="width: 90%">
         <table class="table">
           <thead>
-            <tr>
-              <th>ID</th>
+            <tr>              
               <th>Estado</th>
               <th>Restricción de acceso</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
+            {% for item in data %}
             <tr>
-              <td>ID</td>
-              <td>Estado</td>
-              <td>Restriccion</td>
+              <td>{{ item['tipoEstado'] }}</td>
+              <td>{{ item['resEstado'] }}</td>
               <td>
                 <form>
-                  <input class="form-control" type="hidden" /><a
+                  <input class="form-control" type="hidden" value="item['idEstado']"/><a
                     class="btn btn-primary"
                     role="button"
                     style="
@@ -42,6 +41,7 @@
                       border-color: #3f7d20;
                       margin-right: 2%;
                     "
+                    href="{{ url_for('editarEstado', id=item['idEstado']) }}"
                     >Editar</a
                   ><button class="btn btn-danger" type="submit">
                     Eliminar
@@ -49,6 +49,7 @@
                 </form>
               </td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

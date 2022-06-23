@@ -8,7 +8,7 @@
       <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
         Editar turno
       </h1>
-      <form action="editarTurno" method="post" style="width: 70%">
+      <form action="{{ url_for('editarTurno', id=data['idTurno']) }}" method="post" style="width: 70%">
         <label
           class="form-label"
           for="name"

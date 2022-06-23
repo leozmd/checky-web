@@ -16,28 +16,32 @@
       >
         <div style="width: 50%">
           <ul style="margin-bottom: 0px">
-            <li>Asignatura: Asignatura</li>
-            <li>Carrera: Carrera</li>
-            <li>Grado: Grado</li>
-            <li>Grupo: Grupo</li>
-            <li>Turno: Turno</li>
+            <li>Asignatura: {{ data['nomAsignatura'] }}</li>
+            <li>Carrera: {{ data['nomCarrera'] }}</li>
+            <li>Grado: {{ data['tipoGrado'] }}</li>
+            <li>Grupo: {{ data['tipoGrupo'] }}</li>
+            <li>Turno: {{ data['nomTurno'] }}</li>
           </ul>
         </div>
         <div style="width: 50%">
           <h4>Horarios:</h4>
           <ul>
-            <li>Día: Hora-Hora</li>
+            {% for classroom_schedule in classroom_schedules %}
+            <li>{{ classroom_schedule['diaHorario'] }}: {{ classroom_schedule['iniHorario'] }}-{{ classroom_schedule['finHorario'] }}</li>
+            {% endfor %}
           </ul>
           <form
             class="d-lg-flex align-items-lg-start"
             action="crearHorarioClase"
             method="post"
           >
-            <select class="form-select">
+            <select class="form-select" name="idHorario">
               <optgroup label="Selecciona un horario">
-                <option value="id">Dia: Hora-Hora</option>
+                {% for schedule in schedules %}
+                <option value="{{ schedule['idHorario'] }}">{{ schedule['diaHorario'] }}: {{ schedule['iniHorario'] }}-{{ schedule['finHorario'] }}</option>
+                {% endfor %}
               </optgroup></select
-            ><button class="btn btn-success" type="button">Añadir</button>
+            ><input type="hidden" name="idClase" value="{{ idClase }}"><button class="btn btn-success" type="button">Añadir</button>
           </form>
         </div>
       </div>
@@ -60,7 +64,6 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Nombre</th>
               <th>Sexo</th>
               <th>Matrícula</th>
@@ -70,16 +73,16 @@
             </tr>
           </thead>
           <tbody>
+            {% for member in members %}
             <tr>
-              <td>ID</td>
-              <td>Nombre</td>
-              <td>Sexo</td>
-              <td>Matrícula</td>
-              <td>Usuario</td>
-              <td>Rol</td>
+              <td>{{ member['nomUsuario'] }} {{ member['appatUsuario'] }} {{ member['apmatUsuario'] }}</td>
+              <td>{{ member['sexoUsuario'] }}</td>
+              <td>{{ member['matUsuario'] }}</td>
+              <td>{{ member['usuUsuario'] }}</td>
+              <td>{{ member['tipoRol'] }}</td>
               <td>
-                <form>
-                  <input class="form-control" type="hidden" /><button
+                <form action="{{ url_for('eliminarMiembro') }}">
+                  <input class="form-control" type="hidden" value="{{ member['idMiembro'] }}" /><button
                     class="btn btn-danger"
                     type="submit"
                   >
@@ -88,6 +91,7 @@
                 </form>
               </td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

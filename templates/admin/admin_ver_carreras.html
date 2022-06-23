@@ -21,18 +21,17 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Nombre</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
+            {% for item in data %}
             <tr>
-              <td>ID</td>
-              <td>Nombre</td>
+              <td>{{ item['nomCarrera'] }}</td>
               <td>
-                <form>
-                  <input class="form-control" type="hidden" /><a
+                <form method="post" action="{{ url_for('eliminarCarrera') }}">
+                  <input class="form-control" type="hidden" value="{{ item['idCarrera'] }}" name="idCarrera" /><a
                     class="btn btn-primary"
                     role="button"
                     style="
@@ -40,6 +39,7 @@
                       border-color: #3f7d20;
                       margin-right: 2%;
                     "
+                    href="{{ url_for('editarCarrera', id=item['idCarrera']) }}"
                     >Editar</a
                   ><button class="btn btn-danger" type="submit">
                     Eliminar
@@ -47,6 +47,7 @@
                 </form>
               </td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

@@ -21,7 +21,6 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Día de la semana</th>
               <th>Hora de inicio</th>
               <th>Hora de fin</th>
@@ -29,14 +28,14 @@
             </tr>
           </thead>
           <tbody>
+            {% for item in data %}
             <tr>
-              <td>ID</td>
-              <td>Día</td>
-              <td>Hora</td>
-              <td>Hora</td>
+              <td>{{ item['diaHorario'] }}</td>
+              <td>{{ item['iniHorario'] }}</td>
+              <td>{{ item['finHorario'] }}</td>
               <td>
                 <form>
-                  <input class="form-control" type="hidden" /><a
+                  <input class="form-control" type="hidden" value="{{ item['idHorario'] }}"/><a
                     class="btn btn-primary"
                     role="button"
                     style="
@@ -44,6 +43,7 @@
                       border-color: #3f7d20;
                       margin-right: 2%;
                     "
+                    href="{{ url_for('editarHorario', id=item['idHorario']) }}"
                     >Editar</a
                   ><button class="btn btn-danger" type="submit">
                     Eliminar
@@ -51,6 +51,7 @@
                 </form>
               </td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

@@ -21,8 +21,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Asignatura</th>
+              <th>Clase</th>
               <th>Carrera</th>
               <th>Grado</th>
               <th>Turno</th>
@@ -31,16 +30,16 @@
             </tr>
           </thead>
           <tbody>
+            {% for item in data %}
             <tr>
-              <td>ID</td>
-              <td>Asignatura</td>
-              <td>Carrera</td>
-              <td>Grado</td>
-              <td>Turno</td>
-              <td>Grupo</td>
+              <td>{{ item['nomClase'] }}</td>
+              <td>{{ item['nomCarrera'] }}</td>
+              <td>{{ item['tipoGrado'] }}</td>
+              <td>{{ item['nomTurno'] }}</td>
+              <td>{{ item['tipoGrupo'] }}</td>
               <td>
                 <form>
-                  <input class="form-control" type="hidden" /><a
+                  <input class="form-control" type="hidden" value="{{ item['idClase'] }}"/><a
                     class="btn btn-primary"
                     role="button"
                     style="
@@ -48,6 +47,7 @@
                       border-color: #3f7d20;
                       margin-right: 2%;
                     "
+                    href="{{ url_for('adminVerClase', id=item['idClase']) }}"
                     >Ver</a
                   ><a
                     class="btn btn-primary"
@@ -57,6 +57,7 @@
                       border-color: #3f7d20;
                       margin-right: 2%;
                     "
+                    href="{{ url_for('editarClase', id=item['idClase']) }}"
                     >Editar</a
                   ><button class="btn btn-danger" type="submit">
                     Eliminar
@@ -64,6 +65,7 @@
                 </form>
               </td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

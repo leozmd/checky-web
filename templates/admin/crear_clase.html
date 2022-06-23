@@ -10,7 +10,7 @@
       <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
         Crear clase
       </h1>
-      <form action="crearClase" method="post" style="width: 70%">
+      <form action="{{ url_for('crearClase') }}" method="post" style="width: 70%">
         <label
           class="form-label"
           for="carrera"
@@ -18,12 +18,14 @@
           >Carrera</label
         ><select
           class="form-select"
-          name="carrera"
+          name="idCarrera"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione una carrera">
-            <option value="" selected="">Carrera</option>
+            {% for career in careers %}
+            <option value="{{ career['idCarrera'] }}" selected="">{{ career['nomCarrera'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -32,12 +34,14 @@
           >Grado</label
         ><select
           class="form-select"
-          name="grado"
+          name="idGrado"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione un grado">
-            <option value="" selected="">Grado</option>
+            {% for grade in grades %}
+            <option value="{{ grade['idGrado'] }}" selected="">{{ grade['tipoGrado'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -46,12 +50,14 @@
           >Turno</label
         ><select
           class="form-select"
-          name="turno"
+          name="idTurno"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione un turno">
-            <option value="" selected="">Turno</option>
+            {% for shift in shifts %}
+            <option value="{{ shift['idTurno'] }}" selected="">{{ shift['nomTurno'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -60,12 +66,14 @@
           >Grupo</label
         ><select
           class="form-select"
-          name="grupo"
+          name="idGrupo"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione un grupo">
-            <option value="" selected="">Grupo</option>
+            {% for group in groups %}
+            <option value="{{ group['idGrupo'] }}" selected="">{{ group['tipoGrupo'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -74,12 +82,14 @@
           >Asignatura</label
         ><select
           class="form-select"
-          name="asignatura"
+          name="idAsignatura"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione una asignatura">
-            <option value="" selected="">Asignatura</option>
+            {% for course in courses %}
+            <option value="{{ course['idAsignatura'] }}" selected="">{{ course['nomAsignatura'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><button
           class="btn btn-primary"
@@ -88,44 +98,6 @@
         >
           Enviar
         </button>
-        <div
-          class="alert alert-danger alert-dismissible"
-          role="alert"
-          style="margin-top: 16px"
-        >
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-          <h4 class="alert-heading">Error:</h4>
-          <span
-            ><strong
-              >Los valores ingresados entran en conflicto con una entidad ya
-              existente. (409)</strong
-            ></span
-          >
-        </div>
-        <div
-          class="alert alert-danger alert-dismissible"
-          role="alert"
-          style="margin-top: 16px"
-        >
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-          <h4 class="alert-heading">Error:</h4>
-          <span
-            ><strong
-              >No existen entidades necesarias para la creación de clases.
-              (404)</strong
-            ></span
-          >
-        </div>
       </form>
     </div>
 {% endblock %}

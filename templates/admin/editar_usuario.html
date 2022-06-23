@@ -9,7 +9,7 @@
       <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
         Editar usuario
       </h1>
-      <form action="editarUsuario" method="post" style="width: 70%">
+      <form action="{{ url_for('editarUsuario', id=data['idUsuario']) }}" method="post" style="width: 70%">
         <label
           class="form-label"
           for="nombre"
@@ -32,7 +32,7 @@
           /><input
             class="form-control"
             type="text"
-            name="apmat"
+            name="appmat"
             required=""
             maxlength="45"
           />
@@ -96,7 +96,9 @@
           required=""
         >
           <optgroup label="Seleccione un rol">
-            <option value="" selected="">Rol</option>
+            {% for role in roles %}
+            <option value="{{ role['idRol'] }}" selected="">{{ role['tipoRol'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -110,15 +112,17 @@
           required=""
         >
           <optgroup label="Seleccione un estado">
-            <option value="" selected="">Estado</option>
+            {% for status in statuses %}
+            <option value="{{ status['idEstado'] }}" selected="">{{ status['tipoEstado'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><button
           class="btn btn-primary"
           type="submit"
           style="background: #3f7d20; border-color: #3f7d20; margin-top: 2%"
         >
-          Enviar</button
-        ><input class="form-control" type="hidden" />
+          Enviar
+        </button>
       </form>
     </div>
     <div

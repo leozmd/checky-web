@@ -20,30 +20,23 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Nombre</th>
               <th>Sexo</th>
               <th>Matrícula</th>
               <th>Usuario</th>
-              <th>Contraseña</th>
-              <th>Estado</th>
-              <th>Rol</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
+            {% for item in data %}
             <tr>
-              <td>ID</td>
-              <td>Nombre</td>
-              <td>Sexo</td>
-              <td>Matrícula</td>
-              <td>Usuario</td>
-              <td>Contraseña</td>
-              <td>Estado</td>
-              <td>Rol</td>
+              <td>{{ item['nomUsuario'] }} {{ item['appatUsuario'] }} {{ item['apmatUsuario'] }}</td>
+              <td>{{ item['sexoUsuario'] }}</td>
+              <td>{{ item['matUsuario'] }}</td>
+              <td>{{ item['usuUsuario'] }}</td>
               <td>
                 <form>
-                  <input class="form-control" type="hidden" /><a
+                  <input class="form-control" type="hidden" value="{{ item['idUsuario'] }}"/><a
                     class="btn btn-primary"
                     role="button"
                     style="
@@ -51,6 +44,7 @@
                       border-color: #3f7d20;
                       margin-right: 2%;
                     "
+                    href="{{ url_for('editarUsuario', id=item['idUsuario']) }}"
                     >Editar</a
                   ><button class="btn btn-danger" type="submit">
                     Eliminar
@@ -58,6 +52,7 @@
                 </form>
               </td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

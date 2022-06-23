@@ -9,7 +9,7 @@
       <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
         Crear usuario
       </h1>
-      <form action="crearUsuario" method="post" style="width: 70%">
+      <form action="{{ url_for('crearUsuario') }}" method="post" style="width: 70%">
         <label
           class="form-label"
           for="nombre"
@@ -20,31 +20,31 @@
           <input
             class="form-control"
             type="text"
-            name="nombre"
+            name="nomUsuario"
             required=""
             maxlength="45"
           /><input
             class="form-control"
             type="text"
-            name="appat"
+            name="appatUsuario"
             required=""
             maxlength="45"
           /><input
             class="form-control"
             type="text"
-            name="appmat"
+            name="apmatUsuario"
             required=""
             maxlength="45"
           />
         </div>
         <label
           class="form-label"
-          for="sexo"
+          for="sexoUsuario"
           style="font-family: 'Red Hat Text', sans-serif"
           >Sexo</label
         ><select
           class="form-select"
-          name="sexo"
+          name="sexoUsuario"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
@@ -62,7 +62,7 @@
           type="text"
           required=""
           maxlength="45"
-          name="matricula"
+          name="matUsuario"
         /><label
           class="form-label"
           for="usuario"
@@ -73,7 +73,7 @@
           type="text"
           required=""
           maxlength="45"
-          name="usuario"
+          name="usuUsuario"
         /><label
           class="form-label"
           for="pass"
@@ -83,7 +83,7 @@
           class="form-control"
           type="password"
           required=""
-          name="pass"
+          name="passUsuario"
         /><label
           class="form-label"
           for="rol"
@@ -91,12 +91,14 @@
           >Rol</label
         ><select
           class="form-select"
-          name="rol"
+          name="idRol"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione un rol">
-            <option value="" selected="">Rol</option>
+            {% for role in roles %}
+            <option value="{{ role['idRol'] }}" selected="">{{ role['tipoRol'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><label
           class="form-label"
@@ -105,12 +107,14 @@
           >Estado</label
         ><select
           class="form-select"
-          name="estado"
+          name="idEstado"
           style="font-family: 'Red Hat Text', sans-serif"
           required=""
         >
           <optgroup label="Seleccione un estado">
-            <option value="" selected="">Estado</option>
+            {% for status in statuses %}
+            <option value="{{ status['idEstado'] }}" selected="">{{ status['tipoEstado'] }}</option>
+            {% endfor %}
           </optgroup></select
         ><button
           class="btn btn-primary"
@@ -119,25 +123,7 @@
         >
           Enviar
         </button>
-        <div
-          class="alert alert-danger alert-dismissible"
-          role="alert"
-          style="margin-top: 16px"
-        >
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-          <h4 class="alert-heading">Error:</h4>
-          <span
-            ><strong
-              >Los valores ingresados entran en conflicto con una entidad ya
-              existente. (409)</strong
-            ></span
-          >
-        </div>
+        
       </form>
     </div>
 {% endblock %}

@@ -9,7 +9,7 @@
       <h1 style="color: #3f7d20; font-family: 'Red Hat Display', sans-serif">
         Editar carrera
       </h1>
-      <form action="editarCarrera" method="post" style="width: 70%">
+      <form action="{{ url_for('editarCarrera', id=data['idCarrera']) }}" method="post" style="width: 70%">
         <label
           class="form-label"
           for="name"
@@ -18,7 +18,7 @@
         ><input
           class="form-control"
           type="text"
-          name="name"
+          name="nomCarrera"
           required=""
           maxlength="45"
           style="font-family: 'Red Hat Text', sans-serif"
